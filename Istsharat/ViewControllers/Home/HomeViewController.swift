@@ -10,6 +10,8 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
+    @IBOutlet weak var lblNavTitle: UILabel!
+    
     @IBOutlet weak var tableView: UITableView!
 
     override func viewDidLoad() {
@@ -34,7 +36,9 @@ extension HomeViewController {
     func setupView(){
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UINib.init(nibName: "HomeTableViewCell", bundle: nil), forCellReuseIdentifier: "HomeTableViewCell")
+        tableView.register(UINib.init(nibName: "ChildHomeTableViewCell", bundle: nil), forCellReuseIdentifier: "ChildHomeTableViewCell")
+        tableView.register(UINib.init(nibName: "HeaderHomeTableView", bundle: nil), forCellReuseIdentifier: "HeaderHomeTableView")
+//        tableView.register(UINib.init(nibName: "FooterHomeTableView", bundle: nil), forCellReuseIdentifier: "FooterHomeTableView")
         
         self.parent?.navigationController?.navigationItem.title = "Home"
     }
@@ -44,12 +48,37 @@ extension HomeViewController {
 }
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 10
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10
+        3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath) as! HomeTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ChildHomeTableViewCell", for: indexPath) as! ChildHomeTableViewCell
+        cell.viewColor.backgroundColor = indexPath.row % 2 == 0 ? "#ECECEC".color_ : .white
         return cell
+    }
+    
+     func tableView(_ tableView: UITableView,
+            viewForHeaderInSection section: Int) -> UIView? {
+        let view = HeaderHomeTableView()
+       view.lblTitle.text = "استشارات صحية"
+       return view
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = FooterHomeTableView()
+        return view
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        40
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        80
     }
 }

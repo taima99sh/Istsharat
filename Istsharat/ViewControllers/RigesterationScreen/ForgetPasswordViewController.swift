@@ -35,6 +35,10 @@ class ForgetPasswordViewController: UIViewController {
         
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    @IBAction func btnSideMenu(_ sender: Any) {
+        self.toggleRightViewAnimated(self)
+    }
 }
 extension ForgetPasswordViewController {
     func setupView(){}

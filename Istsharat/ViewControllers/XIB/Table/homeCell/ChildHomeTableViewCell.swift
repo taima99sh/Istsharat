@@ -1,17 +1,17 @@
 //
-//  SearchTableViewCell.swift
+//  ChildHomeTableViewCell.swift
 //  Istsharat
 //
-//  Created by taima on 2/2/21.
+//  Created by taima on 2/3/21.
 //  Copyright © 2021 mac air. All rights reserved.
 //
 
 import UIKit
 
-class SearchTableViewCell: UITableViewCell {
+class ChildHomeTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var lblTitle: UILabel!
-    @IBOutlet weak var lblText: UILabel!
+    @IBOutlet weak var viewColor: UIView!
+    
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,8 +24,4 @@ class SearchTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configureCell() {
-        
-    }
-
 }

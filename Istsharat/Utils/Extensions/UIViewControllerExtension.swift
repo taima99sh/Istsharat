@@ -47,7 +47,7 @@ extension UIViewController {
         Successview.configureContent(title: title!, body: successbody!)
         Successview.button?.isHidden = true
         SwiftMessages.show(view: Successview)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             SwiftMessages.hideAll()
         }
     }
@@ -59,7 +59,7 @@ extension UIViewController {
         Errorview.configureContent(title: title!, body: errorbody!)
         SwiftMessages.show(view: Errorview)
         Errorview.button?.isHidden = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             SwiftMessages.hideAll()
         }
     }

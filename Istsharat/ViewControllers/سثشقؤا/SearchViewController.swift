@@ -37,6 +37,10 @@ class SearchViewController: UIViewController {
         chooseDropDown.show()
     }
     
+    @IBAction func btnSideMenu(_ sender: Any) {
+        self.toggleRightViewAnimated(self)
+    }
+    
     func setupChooseDropDown() {
         chooseDropDown.anchorView = btnType
         chooseDropDown.bottomOffset = CGPoint(x: 0, y: btnType.bounds.height)
@@ -74,6 +78,12 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchTableViewCell", for: indexPath) as! SearchTableViewCell
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = UIStoryboard.mainStoryboard.instantiateViewController(withIdentifier: "ConsultationViewController")
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
         
 }

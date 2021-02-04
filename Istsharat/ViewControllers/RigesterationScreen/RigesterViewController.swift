@@ -54,6 +54,10 @@ class RigesterViewController: UIViewController {
         chooseDropDown.show()
     }
     
+    @IBAction func btnSideMenu(_ sender: Any) {
+        self.toggleRightViewAnimated(self)
+    }
+    
     func setupChooseDropDown() {
         chooseDropDown.anchorView = btnCity
         chooseDropDown.bottomOffset = CGPoint(x: 0, y: btnCity.bounds.height)
@@ -65,8 +69,6 @@ class RigesterViewController: UIViewController {
         }
     }
 }
-
-
 
 extension RigesterViewController {
     func setupView(){

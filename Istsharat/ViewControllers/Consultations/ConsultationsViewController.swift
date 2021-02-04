@@ -11,7 +11,9 @@ import UIKit
 class ConsultationsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-
+    
+    @IBOutlet weak var btnAddNew: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -25,6 +27,17 @@ class ConsultationsViewController: UIViewController {
         super.viewWillAppear(animated)
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    @IBAction func btnAddNew(_ sender: Any) {
+        let vc = UIStoryboard.mainStoryboard.instantiateViewController(withIdentifier: "AskConsultationViewController")
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @IBAction func btnSideMenu(_ sender: Any) {
+        self.toggleRightViewAnimated(self)
     }
 }
 extension ConsultationsViewController {

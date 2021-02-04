@@ -24,8 +24,12 @@ class ChatListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         
+    }
+    
+    @IBAction func btnSideMenu(_ sender: Any) {
+        self.toggleRightViewAnimated(self)
     }
 }
 extension ChatListViewController {
@@ -58,6 +62,12 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 90
         
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = UIStoryboard.mainStoryboard.instantiateViewController(withIdentifier: "ChatViewController")
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

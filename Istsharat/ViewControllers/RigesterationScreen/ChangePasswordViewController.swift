@@ -34,6 +34,10 @@ class ChangePasswordViewController: UIViewController {
         let vc = UIStoryboard.mainStoryboard.instantiateViewController(withIdentifier: "HomeViewController")
         AppDelegate.shared.rootNavigationViewController.setViewControllers([vc], animated: true)
     }
+    
+    @IBAction func btnSideMenu(_ sender: Any) {
+        self.toggleRightViewAnimated(self)
+    }
 }
 extension ChangePasswordViewController {
     func setupView(){}

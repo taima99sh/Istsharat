@@ -10,6 +10,8 @@ import UIKit
 
 class CategoriesViewController: UIViewController {
     
+    @IBOutlet weak var lblNavTitle: UILabel!
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
 
@@ -24,6 +26,11 @@ class CategoriesViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    @IBAction func btnSideMenu(_ sender: Any) {
+        self.toggleRightViewAnimated(self)
     }
 }
 extension CategoriesViewController {
@@ -46,6 +53,12 @@ extension CategoriesViewController: UICollectionViewDelegate, UICollectionViewDa
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCollectionViewCell", for: indexPath) as! CategoryCollectionViewCell
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = UIStoryboard.mainStoryboard.instantiateViewController(withIdentifier: "ConsultationsListViewController") 
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

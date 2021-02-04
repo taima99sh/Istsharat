@@ -10,6 +10,8 @@ import UIKit
 
 class ConsultationViewController: UIViewController {
     
+    @IBOutlet weak var lblNavTitle: UILabel!
+    
     @IBOutlet weak var lblConsultationTitle: UILabel!
     
     @IBOutlet weak var lblConsultationType: UILabel!
@@ -29,9 +31,17 @@ class ConsultationViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     @IBAction func btnConsultation(_ sender: Any) {
+        let vc = UIStoryboard.mainStoryboard.instantiateViewController(withIdentifier: "ChatViewController") 
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @IBAction func btnSideMenu(_ sender: Any) {
+        self.toggleRightViewAnimated(self)
     }
     
 }

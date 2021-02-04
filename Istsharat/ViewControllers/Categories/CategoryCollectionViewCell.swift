@@ -11,4 +11,8 @@ import UIKit
 class CategoryCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var lblTitle: UILabel!
     
+    
+    func configureCell() {
+        
+    }
 }
