@@ -1,0 +1,56 @@
+PODS:
+  - BEMCheckBox (1.4.1)
+  - DropDown (2.3.13)
+  - DZNEmptyDataSet (1.8.1)
+  - FTPopOverMenu (2.1.1)
+  - IQKeyboardManagerSwift (6.5.0)
+  - Kingfisher (5.13.2):
+    - Kingfisher/Core (= 5.13.2)
+  - Kingfisher/Core (5.13.2)
+  - LGSideMenuController (2.1.1)
+  - MBProgressHUD (1.2.0)
+  - SwiftMessages (9.0.0):
+    - SwiftMessages/App (= 9.0.0)
+  - SwiftMessages/App (9.0.0)
+  - SwiftyJSON (5.0.0)
+
+DEPENDENCIES:
+  - BEMCheckBox
+  - DropDown
+  - DZNEmptyDataSet
+  - FTPopOverMenu
+  - IQKeyboardManagerSwift (= 6.5.0)
+  - Kingfisher (= 5.13.2)
+  - LGSideMenuController (= 2.1.1)
+  - MBProgressHUD
+  - SwiftMessages
+  - SwiftyJSON
+
+SPEC REPOS:
+  trunk:
+    - BEMCheckBox
+    - DropDown
+    - DZNEmptyDataSet
+    - FTPopOverMenu
+    - IQKeyboardManagerSwift
+    - Kingfisher
+    - LGSideMenuController
+    - MBProgressHUD
+    - SwiftMessages
+    - SwiftyJSON
+
+SPEC CHECKSUMS:
+  BEMCheckBox: 5ba6e37ade3d3657b36caecc35c8b75c6c2b1a4e
+  DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
+  FTPopOverMenu: 202d46aea0656307fd463fac0340c9c8837158d2
+  IQKeyboardManagerSwift: 6cd19976c6e871907c4ed9127c2d3affdd4defc2
+  Kingfisher: d342c8354c10c3d85a27d6d4c42c41285924b898
+  LGSideMenuController: ae40c80983ab8b8801c7cef0a6804d43aaa72d45
+  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
+  SwiftMessages: 55274ca3a239062398603008ed81924cfd1fe798
+  SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
+
+PODFILE CHECKSUM: cc4f259471184785fa354e1f02804e7769be18ab
+
+COCOAPODS: 1.8.4
