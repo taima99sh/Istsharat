@@ -11,7 +11,7 @@ import LGSideMenuController
 
 class LGSideViewController: LGSideMenuController {
     
-    let rootVC = UIStoryboard.mainStoryboard.instantiateViewController(withIdentifier: "MainNavigationViewController")
+    let rootVC = UIStoryboard.mainStoryboard.instantiateViewController(withIdentifier: "MainNavigationViewController") 
     
     let rightVC = UIStoryboard.mainStoryboard.instantiateViewController(withIdentifier: "MenuViewController")
 

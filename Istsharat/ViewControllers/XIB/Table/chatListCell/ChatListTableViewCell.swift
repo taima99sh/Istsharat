@@ -17,8 +17,21 @@ class ChatListTableViewCell: UITableViewCell {
     @IBOutlet weak var lblTime: UILabel!
     
     @IBOutlet weak var lblNumOfMessages: UILabel!
+        
+    var unreadNum: Int = 0 {
+        didSet {
+            if self.unreadNum == 0 {
+                viewColor.backgroundColor = .white
+                lblNumOfMessages.isHidden = true
+            } else {
+                viewColor.backgroundColor = "lineColor".myColor
+                lblNumOfMessages.text = "\(unreadNum)"
+                lblNumOfMessages.isHidden = false
+            }
+        }
+    }
     
-    var haveNewMessage: Bool = false
+    var object: ChatSession?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,12 +40,13 @@ class ChatListTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
-    
     func configureCell() {
-        lblNumOfMessages.isHidden = self.haveNewMessage ? false : true
-        viewColor.backgroundColor = self.haveNewMessage ? "lineColor".myColor : .white
+        if let obj = self.object {
+            self.lblName.text = obj.category ?? "استشارة صحية"
+            self.lblTime.text = obj.createdAt ?? Date().toString(customFormat: "HH:mm")
+            unreadNum = obj.unread ?? 0
+        }
     }
 }

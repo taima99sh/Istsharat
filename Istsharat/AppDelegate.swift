@@ -6,6 +6,7 @@
 //  Copyright © 2021 mac air. All rights reserved.
 //
 
+
 import UIKit
 import IQKeyboardManagerSwift
 
@@ -16,6 +17,9 @@ extension UIStoryboard{
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    var window: UIWindow?
+    
+    
     static var shared: AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
@@ -25,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        window = UIWindow(frame: UIScreen.main.bounds)
         IQKeyboardManager.shared.enable = true
         return true
     }

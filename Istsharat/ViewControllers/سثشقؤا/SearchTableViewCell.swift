@@ -12,6 +12,8 @@ class SearchTableViewCell: UITableViewCell {
     
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblText: UILabel!
+    
+     var object: Page?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,7 +27,10 @@ class SearchTableViewCell: UITableViewCell {
     }
     
     func configureCell() {
-        
+        if let obj = self.object {
+            self.lblTitle.text = obj.pTitle ?? "بدون عنوان"
+            self.lblText.text = "\(obj.pSummary ?? "")..."
+        }
     }
 
 }

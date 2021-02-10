@@ -23,12 +23,16 @@ class MainNavigationViewController: UINavigationController {
     }
 
   }
-
 extension MainNavigationViewController {
     
     func setupView() {
         AppDelegate.shared.rootNavigationViewController = self
-        let vc = UIStoryboard.mainStoryboard.instantiateViewController(withIdentifier: "HomeViewController")
+        if UserProfile.shared.isUserLogin() {
+            let vc = UIStoryboard.mainStoryboard.instantiateViewController(withIdentifier: "HomeViewController")
+            AppDelegate.shared.rootNavigationViewController.setViewControllers([vc], animated: true)
+            return
+        }
+        let vc = UIStoryboard.mainStoryboard.instantiateViewController(withIdentifier: "LoginViewController")
         AppDelegate.shared.rootNavigationViewController.setViewControllers([vc], animated: true)
     }
     

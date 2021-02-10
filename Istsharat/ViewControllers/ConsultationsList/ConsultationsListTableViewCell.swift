@@ -12,6 +12,8 @@ class ConsultationsListTableViewCell: UITableViewCell {
     
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblText: UILabel!
+    
+    var object: Page?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,6 +24,10 @@ class ConsultationsListTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    func configureCell() {}
-
+    func configureCell() {
+        if let obj = self.object {
+            self.lblTitle.text = obj.pTitle ?? "بدون عنوان"
+            self.lblText.text = "\(obj.pSummary ?? "")..."
+        }
+    }
 }

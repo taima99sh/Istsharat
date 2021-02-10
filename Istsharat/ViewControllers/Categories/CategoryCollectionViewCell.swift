@@ -9,10 +9,19 @@
 import UIKit
 
 class CategoryCollectionViewCell: UICollectionViewCell {
+    
     @IBOutlet weak var lblTitle: UILabel!
     
+    var object: Category?  
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
     
     func configureCell() {
-        
+        if let obj = self.object {
+            self.lblTitle.text = obj.cArName
+        }
     }
 }

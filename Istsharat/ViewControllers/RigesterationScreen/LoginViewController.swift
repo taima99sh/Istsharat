@@ -8,6 +8,7 @@
 
 import UIKit
 import BEMCheckBox
+import LGSideMenuController
 
 class LoginViewController: UIViewController {
     
@@ -35,13 +36,18 @@ class LoginViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        sideMenuController?.isRightViewSwipeGestureEnabled = false
     }
     
     @IBAction func btnLogin(_ sender: Any) {
         guard self.validation() else {return}
-        
-        let vc = UIStoryboard.mainStoryboard.instantiateViewController(withIdentifier: "HomeViewController")
-        AppDelegate.shared.rootNavigationViewController.setViewControllers([vc], animated: true)
+        let email = txtEmail.text ?? ""
+        let password = txtPassword.text ?? ""
+        Constant.userLogin(email: email, password: password) {
+            self.SuccessMessage(title: "", successbody: "تم تسجيل الدخول بنجاح")
+            let vc = UIStoryboard.mainStoryboard.instantiateViewController(withIdentifier: "HomeViewController")
+            AppDelegate.shared.rootNavigationViewController.setViewControllers([vc], animated: true)
+        }
     }
     
     @IBAction func btnToRigester(_ sender: Any) {
@@ -62,7 +68,12 @@ extension LoginViewController {
         self.checkBox.boxType = .square
     }
     func localized(){}
-    func setupData(){}
+    func setupData(){
+        #if DEBUG
+        txtEmail.text = "test2@gmail.com"
+        txtPassword.text = "123456"
+        #endif
+    }
     func fetchData(){}
 }
 

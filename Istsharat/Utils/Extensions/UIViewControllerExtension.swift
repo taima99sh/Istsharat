@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 import SwiftMessages
-import MBProgressHUD
 
 func digitsCode(numOfDigits: Int) -> String {
     let arrletters = Array("0123456789")
@@ -21,6 +20,9 @@ func digitsCode(numOfDigits: Int) -> String {
 }
 extension UIViewController {
     
+    
+    
+    
     func showAlert(title: String, message: String,button1title: String = "ok", button2title: String = "cansel",button1style: UIAlertAction.Style = .default, button2style: UIAlertAction.Style = .default, button1action: @escaping (()->Void), button2action: @escaping (()->Void)) {
         let alert = UIAlertController.init(title: title, message: message, preferredStyle: .alert)
         let button1 = UIAlertAction.init(title: button1title, style: button1style) { (action) in
@@ -30,7 +32,7 @@ extension UIViewController {
             button2action()
         }
         alert.addAction(button1)
-//        alert.addAction(button2)
+        alert.addAction(button2)
         self.present(alert, animated:true, completion: nil)
     }
     func showErrorAlert (message: String){
@@ -86,16 +88,19 @@ extension UIViewController {
         }
     }
     
-    func showIndicator(withTitle title: String?, and Description:String?) {
-       let Indicator = MBProgressHUD.showAdded(to: self.view, animated: true)
-       Indicator.label.text = title
-       Indicator.isUserInteractionEnabled = false
-       Indicator.detailsLabel.text = Description
-       Indicator.show(animated: true)
+    func reloadButton() {
+        let button = UIButton(frame: CGRect(x: 100, y: 100, width: 100, height: 50))
+          button.backgroundColor = .green
+          button.setTitle("Test Button", for: .normal)
+          button.addTarget(self, action: #selector(reloadAction), for: .touchUpInside)
+          self.view.addSubview(button)
     }
-    func hideIndicator() {
-       MBProgressHUD.hide(for: self.view, animated: true)
+    
+    @objc func reloadAction() {
+        
     }
+    
+    
 }
 
 extension Double {

@@ -14,6 +14,9 @@ class FooterHomeTableView: UIView {
     @IBOutlet var lblTitle: UILabel!
     @IBOutlet var view1: UIView!
     
+    var id: Int?
+    var NavTitle = ""
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -21,8 +24,9 @@ class FooterHomeTableView: UIView {
     
     @IBAction func btnMore(_ sender: Any) {
         if let parent = self.parentViewController as? HomeViewController {
-            let vc = UIStoryboard.mainStoryboard.instantiateViewController(withIdentifier: "ConsultationsListViewController")
-            
+            let vc = UIStoryboard.mainStoryboard.instantiateViewController(withIdentifier: "ConsultationsListViewController") as! ConsultationsListViewController
+            vc.id = self.id ?? 0
+            vc.NavTitle = self.NavTitle
             parent.navigationController?.pushViewController(vc, animated: true)
         }
     }

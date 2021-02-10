@@ -96,3 +96,40 @@ extension GeneralCollectionView: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate 
         return NSAttributedString.init(string: EmptyDataTitle, attributes: [NSAttributedString.Key.font : EmptyDataTitleFont, NSAttributedString.Key.foregroundColor: EmptyDataTitleColor])
     }
 }
+//istsharat
+
+class MyCollectionView: UICollectionView {
+    
+    var EmptyDataImage: UIImage? = UIImage()
+    
+    var EmptyDataTitle: String = ""
+    
+    var EmptyDataTitleFont: UIFont = Constant.shared.ProjectFont.toFont() ?? .systemFont(ofSize: 15)
+    
+    var EmptyDataTitleColor: UIColor = "Color".myColor
+    
+    let refreshcontrol = UIRefreshControl()
+    
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        refreshcontrol.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        self.refreshControl = refreshcontrol
+        self.emptyDataSetSource = self
+        self.emptyDataSetDelegate = self
+    }
+    
+
+
+}
+
+extension MyCollectionView: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+   func image(forEmptyDataSet scrollView: UIScrollView!) -> UIImage! {
+       return EmptyDataImage ?? UIImage()
+   }
+   
+   func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+       return NSAttributedString.init(string: EmptyDataTitle, attributes:    [NSAttributedString.Key.font : EmptyDataTitleFont,    NSAttributedString.Key.foregroundColor: EmptyDataTitleColor])
+   }
+   
+}

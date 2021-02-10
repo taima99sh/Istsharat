@@ -8,17 +8,25 @@
 
 import UIKit
 import DropDown
+import SwiftyJSON
 
 class SearchViewController: UIViewController {
     
     @IBOutlet weak var lblType: UILabel!
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: MyTableView!
+    
     @IBOutlet weak var btnType: UIButton!
+    
+    @IBOutlet weak var txtSearch: UITextField!
+    
     
     let chooseDropDown = DropDown()
     
     var arrType = ["نفسية", "صحية", "عائلية", "حياتية"]
+    var arrCatIds: [Int] = []
+    var arrTableData: [Page] = []
+    var cat: String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +49,32 @@ class SearchViewController: UIViewController {
         self.toggleRightViewAnimated(self)
     }
     
+    @IBAction func btnSearch(_ sender: Any) {
+        guard validation() else {return}
+        let request = BaseRequest()
+        let key = self.txtSearch.text ?? ""
+        let dic = [
+            "srch_key": key,
+            "srch_cat": self.cat ,
+            "srch_lang": "0"
+        ]
+        request.url = "PagesSearch"
+        request.method = .post
+        request.parameters = dic
+        
+        RequestBuilder.requestWithSuccessfullRespnose(request: request) { (json) in
+            let data = PageOfCategory.init(fromJson: JSON(json.object))
+            if !data.success {
+                self.showErrorAlert(message: data.message)
+                return
+            }
+            self.arrTableData = data.pages
+            self.tableView.EmptyDataTitle = "لايوجد نتائج لبحثك"
+            self.tableView.reloadData()
+            print(data)
+        }
+    }
+    
     func setupChooseDropDown() {
         chooseDropDown.anchorView = btnType
         chooseDropDown.bottomOffset = CGPoint(x: 0, y: btnType.bounds.height)
@@ -49,6 +83,8 @@ class SearchViewController: UIViewController {
         // Action triggered on selection
         chooseDropDown.selectionAction = { [weak self] (index, item) in
             self?.lblType.text = item
+            if Connectivity.isConnectedToInternet { self?.cat = "\(self?.arrCatIds[index] ?? 0)"}
+            
         }
     }
     
@@ -66,27 +102,54 @@ extension SearchViewController {
         setupChooseDropDown()
     }
     func localized(){}
-    func setupData(){}
-    func fetchData(){}
+    func setupData(){
+        self.tableView.EmptyDataImage = "SearchImage".image_
+        self.tableView.EmptyDataTitle = "ابحث عن استشارة"
+    }
+    func fetchData(){
+        Constant.getCategories(complete: { (categories) in
+            self.arrType =  categories.map { $0.cArName }
+            self.arrCatIds =  categories.map { $0.cId }
+            self.chooseDropDown.dataSource = self.arrType
+        }) { (message) in
+            print(message)
+        }
+    }
 }
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10
+        self.arrTableData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchTableViewCell", for: indexPath) as! SearchTableViewCell
+        cell.object = self.arrTableData[indexPath.row]
+        cell.configureCell()
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = UIStoryboard.mainStoryboard.instantiateViewController(withIdentifier: "ConsultationViewController")
-        
+        let vc = UIStoryboard.mainStoryboard.instantiateViewController(withIdentifier: "ConsultationViewController") as! ConsultationViewController
+        vc.id = self.arrTableData[indexPath.row].pId ?? 0
         self.navigationController?.pushViewController(vc, animated: true)
     }
         
 }
+
+extension SearchViewController {
+    func validation() -> Bool {
+        if (txtSearch.isValidValue) == false {
+            self.ErrorMessage(title: "", errorbody: "أدخل كلمة في مربع البحث")
+            return false
+        }
+        return true
+    }
+}
+
+
+
+
 
 
 

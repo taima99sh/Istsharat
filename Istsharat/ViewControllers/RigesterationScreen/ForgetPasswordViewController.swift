@@ -26,14 +26,31 @@ class ForgetPasswordViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     @IBAction func btnDone(_ sender: Any) {
         guard self.validation() else {return}
-        let vc = UIStoryboard.mainStoryboard.instantiateViewController(withIdentifier: "ChangePasswordViewController")
+        let email = self.txtEmail.text ?? ""
+        let dic = ["email": email]
+        let request = BaseRequest()
+        request.url = "ForgetPassword"
+        request.method = .post
+        request.parameters = dic
         
-        self.navigationController?.pushViewController(vc, animated: true)
+        
+        RequestBuilder.requestWithSuccessfullRespnose(request: request) { (json) in
+            let data = GeneralResponseModel.init(fromJson: json)
+            if data.success {
+                self.SuccessMessage(title: "", successbody: data.message)
+                let vc = UIStoryboard.mainStoryboard.instantiateViewController(withIdentifier: "ChangePasswordViewController") as! ChangePasswordViewController
+                vc.email = email
+                AppDelegate.shared.rootNavigationViewController.setViewControllers([vc], animated: true)
+                return
+            }
+            self.ErrorMessage(title: "", errorbody: data.message)
+            print (json)
+        }
     }
     
     @IBAction func btnSideMenu(_ sender: Any) {

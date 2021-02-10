@@ -7,12 +7,18 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class HomeViewController: UIViewController {
     
     @IBOutlet weak var lblNavTitle: UILabel!
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: MyTableView!
+    
+    //var tableDataArr: [[CategoryHome]] = [[]]
+    var sectionData: [CategoryHome] = []
+    var adv: [String] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +32,7 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+        sideMenuController?.isRightViewSwipeGestureEnabled = true
     }
     
     @IBAction func btnSideMenu(_ sender: Any) {
@@ -37,40 +44,69 @@ extension HomeViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib.init(nibName: "ChildHomeTableViewCell", bundle: nil), forCellReuseIdentifier: "ChildHomeTableViewCell")
-        tableView.register(UINib.init(nibName: "HeaderHomeTableView", bundle: nil), forCellReuseIdentifier: "HeaderHomeTableView")
-//        tableView.register(UINib.init(nibName: "FooterHomeTableView", bundle: nil), forCellReuseIdentifier: "FooterHomeTableView")
         
-        self.parent?.navigationController?.navigationItem.title = "Home"
+        tableView.register(UINib.init(nibName: "AdvsTableViewCell", bundle: nil), forCellReuseIdentifier: "AdvsTableViewCell")
     }
     func localized(){}
-    func setupData(){}
-    func fetchData(){}
+    func setupData(){
+        self.tableView.refreshcontrol.addTarget(self, action:  #selector(fetchData), for: .valueChanged)
+    }
+    @objc func fetchData(){
+        let request = BaseRequest()
+        request.url = "Home"
+        request.method = .get
+        
+        RequestBuilder.requestWithSuccessfullRespnose(request: request) { (json) in
+            let data = HomeModel.init(fromJson: JSON(json.object))
+            if !data.success {
+                self.showErrorAlert(message: data.message)
+                return
+            }
+            if let categories = data.categories {
+                self.sectionData = categories.filter { $0.topics.count != 0 }
+            }
+            self.tableView.refreshcontrol.endRefreshing()
+            self.tableView.EmptyDataImage = "emptyTable".image_
+            self.tableView.EmptyDataTitle = "لاتوجد استشارات"
+            self.tableView.reloadData()
+            print(data)
+        }
+    }
 }
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 10
+        return self.sectionData.count 
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        3
+         self.sectionData[section].topics.count > 3 ? 3 : self.sectionData[section].topics.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row % 3 == 0 && !self.adv.isEmpty {
+             let cell = tableView.dequeueReusableCell(withIdentifier: "AdvsTableViewCell", for: indexPath) as! AdvsTableViewCell
+            //to do
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChildHomeTableViewCell", for: indexPath) as! ChildHomeTableViewCell
         cell.viewColor.backgroundColor = indexPath.row % 2 == 0 ? "#ECECEC".color_ : .white
+        cell.lblNum.text = "\(indexPath.row + 1)"
+        cell.object = self.sectionData[indexPath.section].topics[indexPath.row]
+        cell.configureCell()
         return cell
     }
     
      func tableView(_ tableView: UITableView,
             viewForHeaderInSection section: Int) -> UIView? {
         let view = HeaderHomeTableView()
-       view.lblTitle.text = "استشارات صحية"
+        view.lblTitle.text = self.sectionData[section].cArName ?? "استشارات"
        return view
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let view = FooterHomeTableView()
+        view.id = self.sectionData[section].cId ?? 0
+        view.NavTitle = self.sectionData[section].cArName ?? "استشارات"
         return view
     }
     

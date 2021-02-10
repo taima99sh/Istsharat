@@ -6,14 +6,15 @@ target 'Istsharat' do
   use_frameworks!
   pod 'LGSideMenuController', '2.1.1'
   pod 'IQKeyboardManagerSwift', '6.5.0'
-  pod 'MBProgressHUD'
+  pod 'SVProgressHUD'
   pod 'BEMCheckBox'
   pod 'SwiftMessages'
   pod 'DZNEmptyDataSet'
   pod 'Kingfisher', '5.13.2'
-  pod 'SwiftyJSON'
-  pod 'FTPopOverMenu'
+  pod 'SwiftyJSON', '5.0.0'
+  pod 'Alamofire', '~> 5.0.0-rc.2'
   pod 'DropDown'
+  pod 'MessageKit'
   
   # Pods for Istsharat
 end

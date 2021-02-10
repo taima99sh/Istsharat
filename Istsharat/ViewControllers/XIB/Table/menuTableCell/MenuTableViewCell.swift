@@ -25,8 +25,6 @@ class MenuTableViewCell: GeneralTableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
-
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
                     if let parent = self.parentVC as? MenuViewController {
@@ -47,9 +45,11 @@ class MenuTableViewCell: GeneralTableViewCell {
                                 let vc = UIStoryboard.mainStoryboard.instantiateViewController(withIdentifier: "SearchViewController")
                                 parent.toggleRightViewAnimated(self)
                                 AppDelegate.shared.rootNavigationViewController.setViewControllers([vc], animated: true)
-                            case .addresses: break
-//                                let vc = UIStoryboard.mainStoryboard.instantiateViewController(withIdentifier: "AddressesViewController")
-//                                AppDelegate.shared.rootNavigationViewController.setViewControllers([vc], animated: true)
+                            case .addresses:
+                                let vc = UIStoryboard.mainStoryboard.instantiateViewController(withIdentifier: "ConsultationViewController") as! ConsultationViewController
+                            vc.id = 7
+                                parent.toggleRightViewAnimated(self)
+                                AppDelegate.shared.rootNavigationViewController.setViewControllers([vc], animated: true)
                             case .consultations:
                                 let vc = UIStoryboard.mainStoryboard.instantiateViewController(withIdentifier: "ConsultationsViewController")
                                 parent.toggleRightViewAnimated(self)
@@ -59,11 +59,16 @@ class MenuTableViewCell: GeneralTableViewCell {
                                 parent.toggleRightViewAnimated(self)
                                 AppDelegate.shared.rootNavigationViewController.setViewControllers([vc], animated: true)
                             case .SignOut:
-                                print("SignOut")
-                            @unknown default: break
-                                
+                                parent.showAlert(title: "", message: "هل تريد الخروج؟",button1title: "تأكيد", button2title: "إلغاء", button1action: {
+                                    UserDefaults.resetDefaults()
+                                    let vc = UIStoryboard.mainStoryboard.instantiateViewController(withIdentifier: "LoginViewController")
+                                    parent.toggleRightViewAnimated(self)
+                                    AppDelegate.shared.rootNavigationViewController.setViewControllers([vc], animated: true)
+                                    
+                                }) {
+                                    
+                                }
                             }
-
                         }
                     }
         }

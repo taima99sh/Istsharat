@@ -8,9 +8,11 @@
 
 import Foundation
 import  UIKit
+import SwiftyJSON
 
 class Constant {
     static let shared = Constant()
+    var categories: [Category] = []
     var ProjectFont = "Helvetica Neue W23 for SKY"
     
     
@@ -67,5 +69,55 @@ class Constant {
                     
          }
       }
+    }
+    
+    //getCategories
+    class func getCategories( complete: @escaping ((_ data: [Category]) -> Void), failure: @escaping ((_ message: String) -> Void) ) {
+        let request = BaseRequest()
+        request.url = "getCategories"
+        request.method = .get
+        RequestBuilder.requestWithSuccessfullRespnose(request: request) { (json) in
+            let data = Categories.init(fromJson: JSON(json.object))
+            if !data.success {
+                failure(data.message)
+                return
+            }
+            Constant.shared.categories = data.categories ?? []
+            complete(data.categories)
+            print(data)
+        }
+    }
+    
+    class func userLogin(email: String, password: String, complete: @escaping (() -> Void)) {
+        let dic = [
+            "username": email , //"fhanna@intertech.ps"
+            "password": password
+        ]
+        let request = BaseRequest()
+        request.url = "userLogin"
+        request.method = .post
+        request.parameters = dic
+        RequestBuilder.requestWithSuccessfullRespnose(request: request) { (json) in
+            let data = UserModel.init(fromJson: json)
+            if data.success {
+                if let user = data.userDetails {
+                    if let id = user.id,
+                        let name = user.name,
+                        let arName = user.arName,
+                        let email = user.email,
+                        let city = user.city,
+                        let mobile = user.mobile,
+                        let type = user.type,
+                        let token = data.token {
+                        UserProfile.fillUserData(id, name, arName, email, city, mobile, type, token)
+                    }
+                    complete()
+                }
+                return
+            }
+            let vc = UIStoryboard.mainStoryboard.instantiateViewController(withIdentifier: "LoginViewController")
+            vc.ErrorMessage(title: "", errorbody: data.message)
+
+        }
     }
 }

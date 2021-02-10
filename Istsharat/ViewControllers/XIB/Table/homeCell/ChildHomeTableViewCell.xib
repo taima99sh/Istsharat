@@ -109,6 +109,8 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="lblNum" destination="W6H-4b-Sen" id="8Uc-fd-gzt"/>
+                <outlet property="lblText" destination="75C-43-olg" id="QI3-Uw-jnO"/>
                 <outlet property="viewColor" destination="Y35-vR-3OA" id="ILL-Po-w9u"/>
             </connections>
             <point key="canvasLocation" x="87.681159420289859" y="114.17410714285714"/>

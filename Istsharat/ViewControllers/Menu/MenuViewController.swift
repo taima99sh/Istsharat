@@ -10,7 +10,7 @@ import UIKit
 
 class MenuViewController: UIViewController {
     @IBOutlet weak var tableView: GeneralTableView!
-    
+    @IBOutlet weak var lblName: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -19,16 +19,16 @@ class MenuViewController: UIViewController {
         fetchData()
         // Do any additional setup after loading the view.
     }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.lblName.text = " مرحبا \(UserProfile.shared.ar_name ?? "")"
+        sideMenuController?.isRightViewSwipeGestureEnabled = true
     }
-    
-    
 }
 extension MenuViewController {
     func setupView(){
         tableView.register(UINib.init(nibName: "MenuTableViewCell", bundle: nil), forCellReuseIdentifier: "MenuTableViewCell")
+        self.lblName.text = " مرحبا \(UserProfile.shared.ar_name ?? "")"
     }
     func localized(){}
     func setupData(){
