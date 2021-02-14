@@ -31,7 +31,7 @@ class ChildHomeTableViewCell: UITableViewCell {
     func configureCell() {
         if let obj = self.object {
             //self.lblNum.text = obj.pTitle ?? "بدون عنوان"
-            self.lblText.text = obj.pSummary.count == 0 ? "\(obj.pTitle ?? "")" : "\(obj.pSummary ?? "")"
+            self.lblText.text = obj.pTitle ?? ""
         }
     }
     

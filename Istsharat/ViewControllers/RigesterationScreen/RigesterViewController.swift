@@ -35,6 +35,7 @@ class RigesterViewController: UIViewController {
     }
     var arrType = ["القدس"
 , "بيت لحم", "رام الله", "غزة"]
+    
     var arrCatIds: [Int] = []
     var cityId: String = ""
 

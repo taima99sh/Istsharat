@@ -10,7 +10,7 @@ import UIKit
 
 class AdvsTableViewCell: UITableViewCell {
     
-    var img: String = ""
+    var img: String = "http://clients.intertech.ps/consulting/public/files/image/adhere.png"
 
     @IBOutlet weak var imgView: UIImageView!
     override func awakeFromNib() {

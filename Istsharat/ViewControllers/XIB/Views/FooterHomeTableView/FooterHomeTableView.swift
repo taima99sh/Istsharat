@@ -29,6 +29,7 @@ class FooterHomeTableView: UIView {
             vc.NavTitle = self.NavTitle
             parent.navigationController?.pushViewController(vc, animated: true)
         }
+        
     }
     
     
@@ -41,11 +42,24 @@ class FooterHomeTableView: UIView {
         Bundle.main.loadNibNamed(kCONTENT_XIB_NAME, owner: self, options: nil)
         view1.layer.cornerRadius = 5
         view1.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-        contentView.fixInView(self)
+        //contentView.fixInView(self)
+        configureXib()
         
     }
     
     class func instanceFromNib() -> FooterHomeTableView {
         return UINib(nibName: "FooterHomeTableView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! FooterHomeTableView
+    }
+    
+    private func configureXib() {
+        //Bundle.main.loadNibNamed("HeaderHomeTableView", owner: self, options: [:])
+        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(contentView)
+        contentView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        contentView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        contentView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        contentView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        contentView.layoutIfNeeded()
     }
 }

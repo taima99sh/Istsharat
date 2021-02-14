@@ -32,12 +32,25 @@ class HeaderHomeTableView: UIView {
         Bundle.main.loadNibNamed(kCONTENT_XIB_NAME, owner: self, options: nil)
         view1.layer.cornerRadius = 5
         view1.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        contentView.fixInView(self)
+            configureXib()
+        //contentView.fixInView(self)
         
     }
     
     class func instanceFromNib() -> HeaderHomeTableView {
         return UINib(nibName: "HeaderHomeTableView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! HeaderHomeTableView
+    }
+    
+    private func configureXib() {
+//        Bundle.main.loadNibNamed("HeaderHomeTableView", owner: self, options: [:])
+        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(contentView)
+        contentView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        contentView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        contentView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        contentView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        contentView.layoutIfNeeded()
     }
 }
 

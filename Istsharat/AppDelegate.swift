@@ -19,11 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    
     static var shared: AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
-    
     var rootNavigationViewController: UINavigationController!
 
 
